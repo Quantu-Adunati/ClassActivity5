@@ -1,0 +1,64 @@
+<h1 [ngClass]="{
+  'gray': h1Style,
+  'large': !h1Style
+}">Home</h1>
+<button (click)="firstClick()">Click me</button>
+
+<h1>Users</h1>
+
+<ul *ngIf="users">
+  <li *ngFor="let user of users">
+    <p>{{ user.Name }} {{ user.Surname }}</p>
+  </li>
+</ul>
+
+<button (click)="getMore()">More info</button>
+  <ul *ngIf="userMore">
+    <li *ngFor="let user of userMore">
+      <p>{{ user.Name }} {{ user.Surname }} {{user.Gender}} {{user.TypeOfWork}}</p>
+    </li>
+  </ul>
+
+  <form [formGroup]="insertForm" (ngSubmit)="onSubmit()">
+
+    <h5 *ngIf="success">Your form is valid!</h5>
+    <label>
+        Name(original):
+        <input type="text" formControlName="nameFirst">
+        <div *ngIf="submitted && insertForm.controls.nameFirst.errors" class="error">
+          <div *ngIf="insertForm.controls.nameFirst.errors.required">The original name is required</div>
+        </div>
+      </label>
+      
+    <label>
+      Name:
+      <input type="text" formControlName="name">
+      <div *ngIf="submitted && insertForm.controls.name.errors" class="error">
+        <div *ngIf="insertForm.controls.name.errors.required">Your name is required</div>
+      </div>
+    </label>
+    <label>
+      Surname:
+      <input type="text" formControlName="surname">
+      <div *ngIf="submitted && insertForm.controls.surname.errors" class="error">
+        <div *ngIf="insertForm.controls.surname.errors.required">Your surname is required</div>
+      </div>
+    </label>
+    <!-- <label>
+      Gender:
+      <input type="text" formControlName="gender">
+      <div *ngIf="submitted && insertForm.controls.gender.errors" class="error">
+        <div *ngIf="insertForm.controls.gender.errors.required">Your name is required</div>
+      </div>
+    </label>
+    <label>
+      Type of Work:
+      <input type="text" formControlName="work">
+      <div *ngIf="submitted && insertForm.controls.work.errors" class="error">
+        <div *ngIf="insertForm.controls.work.errors.required">Your name is required</div>
+      </div>
+    </label> -->
+
+    <input type="submit" value="Add user" class="cta">
+  </form>
+

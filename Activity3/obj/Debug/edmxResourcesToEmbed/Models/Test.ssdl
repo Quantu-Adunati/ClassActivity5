@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="userINFs">
+    <Key>
+      <PropertyRef Name="idOfUser" />
+    </Key>
+    <Property Name="idOfUser" Type="int" Nullable="false" />
+    <Property Name="gender" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="userTs">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="Surname" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="userWorks">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="int" Nullable="false" />
+    <Property Name="workType" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_for_fk">
+    <End Role="userTs" Type="Self.userTs" Multiplicity="1" />
+    <End Role="userWorks" Type="Self.userWorks" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="userTs">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="userWorks">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_forTwo_fk">
+    <End Role="userTs" Type="Self.userTs" Multiplicity="1" />
+    <End Role="userINFs" Type="Self.userINFs" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="userTs">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="userINFs">
+        <PropertyRef Name="idOfUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestModelStoreContainer">
+    <EntitySet Name="userINFs" EntityType="Self.userINFs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="userTs" EntityType="Self.userTs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="userWorks" EntityType="Self.userWorks" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_for_fk" Association="Self.FK_for_fk">
+      <End Role="userTs" EntitySet="userTs" />
+      <End Role="userWorks" EntitySet="userWorks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_forTwo_fk" Association="Self.FK_forTwo_fk">
+      <End Role="userTs" EntitySet="userTs" />
+      <End Role="userINFs" EntitySet="userINFs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
